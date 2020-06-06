@@ -26,4 +26,21 @@ class AppLaporan {
         $params =array('tanggal'=>$awal);
         return DbHandler::getAll($sql,$params);
     }
+
+    public static function get_laporan_pinjaman($idp=1,$awal,$akhir){
+        $sql = "SELECT a.nama AS anggota,
+                pa.nomor_kontrak,pa.tanggal,
+                pa.pokok,pa.bunga_rupiah,pa.total_pinjaman,
+                pa.tenor,pa.status,
+                SUM(b.nominal_pokok) AS bayar_pokok,
+                SUM(b.nominal_bunga) AS bayar_bunga
+                FROM tb_pinjaman_anggota pa
+                JOIN tb_pembayaran b ON b.nomor_kontrak=pa.nomor_kontrak
+                JOIN tb_pinjaman p ON p.id=pa.id_pinjaman
+                JOIN tb_anggota a ON a.id=pa.id_anggota\n";
+        $sql .="WHERE pa.id_pinjaman='".$idp."' AND pa.tanggal BETWEEN '".$awal."' AND '".$akhir."'\n";
+        $sql .="GROUP BY pa.nomor_kontrak\n";
+        $params =array('id_pinjaman'=>$idp,'tanggal'=>$awal);
+        return DbHandler::getAll($sql,$params);
+    }
 }

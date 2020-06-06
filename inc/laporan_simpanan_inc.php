@@ -8,36 +8,22 @@ $simpanan = AppKatalog::getAllRowsWithStatus('tb_simpanan',1);
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <div class="form-row align-items-center">
-              <div class="col-auto">
-                <h4 class="mr-4">Periode</h4>
-              </div>
-              <div class="col-auto">
-                <label class="sr-only" for="tawal-laporan_simpanan">Tanggal</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">Tanggal</div>
-                  </div>
-                  <input type="text" class="form-control input-tanggal" id="tawal-laporan_simpanan" name="tawal-laporan_simpanan" value="<?php echo $tglnow;?>" data-zdp_readonly_element="false">
-                </div>
-              </div>
-              <div class="col-auto">
-                <label class="sr-only" for="takhir-laporan_simpanan">S.D</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">S.D</div>
-                  </div>
-                  <input type="text" class="form-control input-tanggal" id="takhir-laporan_simpanan" name="takhir-laporan_simpanan" value="<?php echo $tglnow;?>" data-zdp_readonly_element="false">
-                </div>
-              </div>
-              <div class="col-auto">
-                <button type="button" class="btn btn-info" id="filter-laporan_simpanan">Filter</button>
+        <div class="card bg-gradient-light">
+          <div class="card-header border-0 mb-4">
+            <h3 class="card-title">
+              <i class="fas fa-th mr-2"></i>Tabel Simpanan Anggota
+            </h3>
+            <div class="card-tools">
+              <div class="input-group">
+                <label for="tawal-laporan_simpanan" class="mr-3 pt-1">Tanggal</label>
+                <input type="text" class="form-control-plaintext p-1 input-tanggal border-bottom" id="tawal-laporan_simpanan" name="tawal-laporan_simpanan" value="<?php echo $tglnow;?>" data-zdp_readonly_element="false">
+                <label for="tawal-laporan_simpanan" class="mr-3 ml-3 pt-1">s.d</label>
+                <input type="text" class="form-control-plaintext p-1 input-tanggal border-bottom" id="takhir-laporan_simpanan" name="takhir-laporan_simpanan" value="<?php echo $tglnow;?>" data-zdp_readonly_element="false">
+                <button type="button" class="btn btn-info btn-sm ml-3" id="filter-laporan_simpanan"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </div>
-          <div class="card-body">
+          <div class="card-body p-0">
             <div class="table-responsive">
               <table class="table table-hover table-striped table-sm" id="tb-laporan_simpanan">
                 <thead>
@@ -88,7 +74,7 @@ $(function() {
   function fetch_data(table, awal, akhir) {
     let judul = 'Laporan Simpanan Anggota per : ' + akhir
     let datatable = $('#tb-' + table).DataTable({
-      dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>t<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"p>>',
+      dom: '<"row"<"col-sm-12 col-md-6 pl-2"B><"col-sm-12 col-md-6 pr-2"f>>t<"row"<"col-sm-12 col-md-6 p-2"l><"col-sm-12 col-md-6 p-2 "p>>',
       autoWidth: false,
       processing: true,
       serverside: true,

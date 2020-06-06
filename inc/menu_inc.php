@@ -2,14 +2,9 @@
 if (!defined('WEB_ROOT')) {
     exit;
 }
-
-// $uri = $_SERVER['REQUEST_URI'];
-// $parse = parse_url($uri);
-// parse_str($parse['query'],$params);
-// $idl = $params['action'];
 ?>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-warning elevation-4">
+<aside class="main-sidebar bg-navy sidebar-dark-warning elevation-4">
   <div class="brand-logo text-center border-0">
     <a href="<?php echo BASE_URI; ?>" class="brand-link bg-navy border-0">
       <span class="brand-text">
@@ -119,6 +114,12 @@ if (!defined('WEB_ROOT')) {
               <a id="laporan_simpanan" href="#" class="nav-link a-link-menu-nav">
                 <i class="nav-icon fas fa-clipboard-check"></i>
                 <p>Laporan Simpanan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a id="laporan_pembayaran" href="#" class="nav-link a-link-menu-nav">
+                <i class="nav-icon fas fa-clipboard-check"></i>
+                <p>Laporan Pembayaran</p>
               </a>
             </li>
           </ul>

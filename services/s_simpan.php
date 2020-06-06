@@ -26,7 +26,8 @@ if (isset($_POST['token']) && $_POST['token']=='simpan'){
         $dt = $_POST['data'];
         $func = 'new_'.$_POST['param'];
         parse_str($dt,$data);
-        var_dump($data);
+        AppKatalog::$func($data);
+        echo '{"status":true}';
     } else {
         AppKatalog::$func($data);
         echo '{"status":true}';

@@ -10,7 +10,7 @@ if (!defined('WEB_ROOT')) {
         <div class="card bg-gradient-light">
           <div class="card-header border-0 mb-4">
             <h3 class="card-title">
-              <i class="fas fa-th mr-2"></i>Tabel Anggota
+              <i class="fas fa-th mr-2"></i>Tabel Pengeluaran
             </h3>
             <div class="card-tools">
               <div class="input-group">

@@ -274,13 +274,13 @@ function kreditBadge(sts) {
   let status;
   switch (sts) {
     case "LUNAS":
-      status = '<span class="badge badge-success">Lunas</span>';
+      status = '<span class="badge badge-success">LUNAS</span>';
       break;
     case "JALAN":
-      status = '<span class="badge badge-primary">Jalan</span>';
+      status = '<span class="badge badge-primary">JALAN</span>';
       break;
     case "MACET":
-      status = '<span class="badge badge-danger">Macet</span>';
+      status = '<span class="badge badge-danger">MACET</span>';
       break;
     default:
       status = '-';

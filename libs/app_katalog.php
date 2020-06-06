@@ -437,4 +437,55 @@ class AppKatalog {
                 );
         return DbHandler::cExecute($sql, $params);
     }
+
+    public static function get_pembayaran(){
+        $sql = "SELECT p.*,pa.id_anggota,a.nama AS anggota
+                FROM tb_pembayaran p
+                JOIN tb_pinjaman_anggota pa ON pa.nomor_kontrak=p.nomor_kontrak
+                JOIN tb_anggota a ON a.id=pa.id_anggota";
+        return DbHandler::getAll($sql);
+    }
+
+    public static function new_pembayaran($data){
+        $tgl = date('Y-m-d',strtotime($data['tgl-bayar']));
+        $bayar_pokok = ($data['bayar-pokok'] =='') ? 0 : to_int_koma($data['bayar-pokok']);
+        $bayar_bunga = ($data['bayar-bunga'] == '') ? 0 : to_int_koma($data['bayar-bunga']);
+        $keterangan = trim($data['keterangan']);
+        $sql = "INSERT INTO tb_pembayaran
+                (id,nomor_kontrak,tanggal,nominal_pokok,nominal_bunga,keterangan)
+                VALUES(NULL,
+                '".$data['nomor-kontrak']."',
+                '".$tgl."',
+                '".$bayar_pokok."',
+                '".$bayar_bunga."',
+                '".$keterangan."')";
+        $params = array(
+                'nomor-kontrak'=>$data['nomor-kontrak'],
+                'tanggal'=>$tgl,
+                'nominal_pokok'=>$bayar_pokok,
+                'nominal_bunga'=>$bayar_bunga,
+                'keterangan'=>$keterangan
+                );
+        return DbHandler::cExecute($sql,$params);
+
+    }
+
+    public static function select_sum_bayar($no){
+        $sql = "SELECT SUM(nominal_pokok) AS sum_pokok,
+                SUM(nominal_bunga) AS sum_bunga
+                FROM tb_pembayaran
+                WHERE nomor_kontrak = '".$no."'";
+        $param = array('nomor_kontrak'=>$no);
+        return DbHandler::getRow($sql,$param);
+    }
+
+    public static function select_count_bayar($no){
+        $sql = "SELECT COUNT(IF(nominal_pokok>0,1,NULL)) AS ct_pokok,
+                COUNT(IF(nominal_bunga>0,1,NULL)) AS ct_bunga
+                FROM tb_pembayaran
+                WHERE nomor_kontrak = '".$no."'";
+        $param = array('nomor_kontrak'=>$no);
+        return DbHandler::getRow($sql,$param);
+    }
+
 }
