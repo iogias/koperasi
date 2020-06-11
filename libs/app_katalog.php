@@ -102,15 +102,17 @@ class AppKatalog {
     public static function new_anggota($data){
         $nama = ucwords($data['nama']);
         $tgl = date('Y-m-d',strtotime($data['tgl-daftar']));
-        $sql = "INSERT INTO tb_anggota(id,tanggal,nama,alamat,hp,status)
+        $sql = "INSERT INTO tb_anggota(id,tanggal,salut,nama,alamat,hp,status)
             VALUES(NULL,
             '".$tgl."',
+            '".$data['salut']."',
             '".$nama."',
             '".$data['alamat']."',
             '".$data['hp']."',
             '".$data['status']."')";
         $params = array(
                     'tanggal'=>$tgl,
+                    'salut'=>$data['salut'],
                     'nama'=>$nama,
                     'alamat'=>$data['alamat'],
                     'hp'=>$data['hp'],
@@ -125,6 +127,7 @@ class AppKatalog {
         $tgl = date('Y-m-d',strtotime($data['tgl-daftar']));
         $sql = "UPDATE tb_anggota SET
             tanggal = '".$tgl."',
+            salut = '".$data['salut']."'
             nama = '".$nama."',
             alamat = '".$data['alamat']."',
             hp = '".$data['hp']."',
@@ -133,6 +136,7 @@ class AppKatalog {
         $params = array(
                     'id'=>$id,
                     'tanggal'=>$tgl,
+                    'salut'=>$data['data'],
                     'nama'=>$nama,
                     'alamat'=>$data['alamat'],
                     'hp'=>$data['hp'],

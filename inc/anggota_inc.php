@@ -54,6 +54,15 @@ if (!defined('WEB_ROOT')) {
           <div class="card-body">
             <form class="form-horizontal" id="f-anggota" name="f-anggota" autocomplete="off">
               <div class="form-group row">
+                <label for="nama" class="col-sm-3 col-form-label">Salut</label>
+                <div class="col-sm-9">
+                  <select class="form-control form-anggota" id="salut" name="salut" required>
+                    <option value="Bp.">Bp.</option>
+                    <option value="Ibu">Ibu</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="nama" class="col-sm-3 col-form-label">Nama</label>
                 <div class="col-sm-9">
                   <input type="hidden" id="id-anggota" name="id-anggota">
@@ -118,6 +127,10 @@ $(function() {
     fetch_data(param, status)
   })
 
+  // $('#salut').change(function(e) {
+  // let salut = $(this).val()
+  // })
+
   $(document).on('click', '.btn-edit', function(e) {
     e.preventDefault()
     let idx = $(this).attr('id').replace(param + '-', '')
@@ -133,6 +146,7 @@ $(function() {
         $('#alamat').val(data.row.alamat)
         $('#hp').val(data.row.hp)
         $('#tgl-daftar').val(formatDmy(data.row.tanggal))
+        $('#salut').val(data.row.salut).attr('selected')
         $('#status').val(data.row.status).attr('selected')
       }
     }, 'json')
@@ -174,8 +188,13 @@ $(function() {
           },
           "lengthMenu": " _MENU_ baris "
         },
-        columns: [
-          { "data": "nama", "class": "pl-3" },
+        columns: [{
+            "data": "nama",
+            "class": "pl-3",
+            "render": function(data, type, row) {
+              return row.salut + "&nbsp;" + data
+            },
+          },
           { "data": "alamat", "class": "text-center" },
           { "data": "hp", },
           {
