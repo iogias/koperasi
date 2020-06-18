@@ -11,12 +11,14 @@ if (isset($_POST['token']) && $_POST['token']=='laporan'){
         $simpanan = AppKatalog::getAllRowsWithStatus('tb_simpanan',1);
         foreach($result as $row){
             $sub = array();
-            $sub[] = $row['anggota'];
+            $sub[] = '';
+            $sub[] = $row['salut'].'&nbsp;'.$row['anggota'];
             for($i=0;$i<count($simpanan);$i++){
                 $sub[] = money_simple($row[$simpanan[$i]['nama']]);
             }
             $sub[] = money_simple('-'.$row['ambil']);
             $sub[] = money_simple($row['total']);
+
             $data[]=$sub;
         }
         $res = array('data'=>$data);

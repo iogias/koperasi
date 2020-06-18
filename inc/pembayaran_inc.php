@@ -74,6 +74,7 @@ $pin = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                   </select>
                 </div>
                 <div class="col-md-5">
+                  <input type="hidden" id="id-pembayaran" name="id-pembayaran">
                   <input type="hidden" id="id-anggota" name="id-anggota">
                   <input type="text" class="form-control form-pembayaran" id="form-cari" name="form-cari" data-mask required>
                   <ul id="list-cari" class="list-group"></ul>
@@ -88,20 +89,6 @@ $pin = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                 <div class="form-group col-md-6">
                   <label for="tgl-bayar">Tgl. Bayar</label>
                   <input value="<?php echo $tglnow;?>" type="text" class="input-tanggal form-control form-pembayaran" id="tgl-bayar" name="tgl-bayar" data-zdp_readonly_element="false">
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col-md-4">
-                  <label for="angsuran-pokok">Angsuran Pokok (bln)</label>
-                  <input type="text" id="angsuran-pokok" class="form-control-plaintext border-bottom form-display">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="angsuran-bunga">Angsuran Bunga (bln)</label>
-                  <input type="text" id="angsuran-bunga" class="form-control-plaintext border-bottom form-display">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="angsuran-total">Total Angsuran (bln)</label>
-                  <input type="text" id="angsuran-total" class="form-control-plaintext border-bottom form-display">
                 </div>
               </div>
               <div class="row">
@@ -153,6 +140,21 @@ $pin = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                   <input type="text" id="status" class="form-control-plaintext border-bottom form-display">
                 </div>
               </div>
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="angsuran-pokok">Angsuran Pokok (bln)</label>
+                  <input type="text" id="angsuran-pokok" class="form-control-plaintext border-bottom form-display">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="angsuran-bunga">Angsuran Bunga (bln)</label>
+                  <input type="text" id="angsuran-bunga" class="form-control-plaintext border-bottom form-display">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="angsuran-total">Total Angsuran (bln)</label>
+                  <input type="text" id="angsuran-total" class="form-control-plaintext border-bottom form-display">
+                </div>
+              </div>
+              <br />
               <div class="row">
                 <div class="form-group col-md-4">
                   <label for="pokok">Total Pokok</label>
@@ -230,7 +232,7 @@ $(function() {
       $('#form-cari').inputmask("remove")
     } else {
       $('#form-cari').inputmask({
-        "mask": "999999-9999"
+        "mask": "99999999-999"
       })
     }
   })
@@ -275,19 +277,21 @@ $(function() {
   $(document).on('click', '.btn-edit', function(e) {
     e.preventDefault()
     let idx = $(this).attr('id').split('-')
-    console.log(idx)
     if (idx[0] == param) {
       enable_form(param, 'edit')
       $.post(service_url + 's_edit.php', {
-        token: 'join_anggota',
-        param: param,
+        token: 'pembayaran',
         data: idx[1]
       }, function(data) {
         if (data.status == true) {
           $('#id-' + param).val(data.row.id)
+          $('#select-pinjaman').val(data.row.id_pinjaman).attr('selected')
+          $('#form-cari').val(data.row.nm_anggota)
           $('#nomor-kontrak').val(data.row.nomor_kontrak)
-          $('#form-cari').val(data.row.nama)
-
+          $('#bayar-pokok').val(formatCurrency(data.row.nominal_pokok))
+          $('#bayar-bunga').val(formatCurrency(data.row.nominal_bunga))
+          $('#tgl-bayar').val(formatDmy(data.row.tanggal))
+          $('#keterangan').val(data.row.keterangan)
         }
       }, 'json')
     }
@@ -356,7 +360,7 @@ $(function() {
             "data": "id",
             "class": "text-center",
             "render": function(data, type, row) {
-              return actionBtn(table, data)
+              return actionBtnEditBayar(table, data, row.nomor_kontrak)
             },
           },
         ],

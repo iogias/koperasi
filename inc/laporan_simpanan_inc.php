@@ -28,6 +28,7 @@ $simpanan = AppKatalog::getAllRowsWithStatus('tb_simpanan',1);
               <table class="table table-hover table-striped table-sm" id="tb-laporan_simpanan">
                 <thead>
                   <tr>
+                    <th class="text-center" width="2%">No.</th>
                     <th class="text-center">Anggota</th>
                     <?php foreach($simpanan as $col){ ?>
                     <th class="text-center">
@@ -42,6 +43,7 @@ $simpanan = AppKatalog::getAllRowsWithStatus('tb_simpanan',1);
                 </tbody>
                 <tfoot>
                   <tr>
+                    <th>&nbsp;</th>
                     <th>Total</th>
                     <?php for($j=0;$j<count($simpanan);$j++){ ?>
                     <th>&nbsp;</th>
@@ -94,10 +96,6 @@ $(function() {
         [10, 25, 50, 100],
         [10, 25, 50, 100]
       ],
-      columnDefs: [
-        { className: "text-left pl-4", targets: 0 },
-        { className: "text-right pr-4", targets: "_all" },
-      ],
       language: {
         "search": "Cari: ",
         "paginate": {
@@ -108,6 +106,28 @@ $(function() {
         },
         "lengthMenu": " _MENU_ baris "
       },
+      columnDefs: [{
+          searchable: false,
+          orderable: false,
+          targets: "_all"
+        },
+        {
+          className: "text-left pl-4",
+          targets: 1
+        },
+        {
+          className: "text-center",
+          targets: 0
+        },
+        {
+          className: "text-right pr-4",
+          targets: "_all"
+        },
+      ],
+      fnCreatedRow: function(row, data, index) {
+        $('td', row).eq(0).html(index + 1);
+      },
+
       buttons: [{
           extend: 'excelHtml5',
           className: 'btn-success',
@@ -160,7 +180,8 @@ $(function() {
       footerCallback: function(row, data, start, end, display) {
         var api = this.api(),
           data;
-        var colNumber = api.columns()[0];
+        // var colNumber = api.columns()[0];
+        var colNumber = [1, 2, 3, 4, 5, 6];
         var intVal = function(i) {
           return typeof i === 'string' ?
             i.replace(/[, ₹]|(\.\d{2})/g, '') * 1 :

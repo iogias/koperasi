@@ -1,7 +1,7 @@
 <?php
 require_once '../libs/config.php';
 if (isset($_POST['token']) && $_POST['token']=='cari'){
-    $key = trim($_POST['query']);
+    $key = $_POST['query'];
     $param = $_POST['param'];
     $arg = (isset($_POST['arg'])&&$_POST['arg']!='')?$_POST['arg']:'';
     $anggota='';

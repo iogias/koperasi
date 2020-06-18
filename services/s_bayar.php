@@ -2,7 +2,7 @@
 require_once '../libs/config.php';
 header('Content-type: application/json');
 if(isset($_POST['token']) && $_POST['token']=='bayar'){
-    $id = $_POST['data'];
+    $id = rem_space(strtolower($_POST['data']));
     $table= 'tb_'.$_POST['param'];
 
     $items = AppKatalog::getRowByNomorKontrak($id);

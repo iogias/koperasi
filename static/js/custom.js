@@ -300,6 +300,12 @@ function actionBtn(param, id) {
   return btn
 }
 
+function actionBtnEditBayar(param, id, nomor) {
+  let btn = '<button type="button" class="btn btn-warning btn-sm btn-edit" data-kontrak="' + nomor + '" id="' + param + '-' + id + '">'
+  btn += '<i class="fas fa-pencil-alt"></i></button>'
+  return btn
+}
+
 function actionBtn2(param, id) {
   let btn = '<button type="button" class="btn btn-warning btn-sm btn-edit" id="' + param + '-' + id + '">'
   btn += '<i class="fas fa-pencil-alt"></i></button>&nbsp;'

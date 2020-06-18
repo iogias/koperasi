@@ -90,3 +90,7 @@ function to_int_titik($arg){
     $arg = (int) $arg;
     return $arg;
 }
+
+function rem_space($str){
+    return preg_replace("/\s+/", "", $str);
+}

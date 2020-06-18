@@ -265,8 +265,13 @@ $(function() {
           "lengthMenu": " _MENU_ baris "
         },
 
-        columns: [
-          { "data": "anggota", "class": "pl-3" },
+        columns: [{
+            "data": "anggota",
+            "class": "pl-3",
+            "render": function(data, type, row) {
+              return row.salut + "&nbsp;" + data
+            },
+          },
           { "data": "simpanan", },
           {
             "data": "tanggal",

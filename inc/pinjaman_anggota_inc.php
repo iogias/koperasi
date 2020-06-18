@@ -219,13 +219,14 @@ $(function() {
         $('#plafon-hidden').val(data.row.max_plafon)
         $('#bunga-persen').val(data.row.max_bunga)
         $('#tenor').val(data.row.max_tenor)
-        $('#admin-persen').val(data.row.biaya_admin)
+        $('#admin-persen').val(data.row.max_admin)
         _plafon = $('#plafon').val()
         _bunga = $('#bunga-persen').val()
         _admin = $('#admin-persen').val()
         if (_plafon != 0 && _bunga != 0 && _admin != 0) {
           hitung_persen(_plafon, _bunga)
           hitung_admin(_plafon, _admin)
+          console.log(_admin)
           _admin_rp = $('#admin-rp').val()
           hitung_terima(_plafon, _admin_rp)
         }
@@ -236,13 +237,17 @@ $(function() {
   $('#plafon').blur(function(e) {
     let max_plafon = parseInt($('#plafon-hidden').val())
     let this_plafon = parseInt(formatNormal($(this).val()))
+    let bunga = $('#bunga-persen').val()
+    let tenor = $('#tenor').val()
+    let admin = $('#admin-persen').val()
+    console.log(_bunga)
     if (this_plafon > max_plafon) {
       toastr.error('Plafon melebihi batas maksimal')
       $(this).addClass('is-invalid')
     } else {
       _plafon = this_plafon
-      hitung_persen(_plafon, _bunga)
-      hitung_admin(_plafon, _admin)
+      hitung_persen(_plafon, bunga)
+      hitung_admin(_plafon, admin)
       _admin_rp = $('#admin-rp').val()
       hitung_terima(_plafon, _admin_rp)
     }

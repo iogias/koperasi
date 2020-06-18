@@ -152,8 +152,6 @@ $(function() {
     }, 'json')
   })
 
-
-
   function fetch_data(arg1, arg2 = '99') {
     $.ajax({
       url: service_url + 's_katalog.php',

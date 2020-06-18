@@ -38,6 +38,7 @@ $pinjaman = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                   <tr>
                     <th class="text-center">Anggota</th>
                     <th class="text-center">No.Kontrak</th>
+                    <th class="text-center">Status</th>
                     <th class="text-center">Tgl.Pinjam</th>
                     <th class="text-center">Pokok</th>
                     <th class="text-center">Bunga</th>
@@ -45,7 +46,6 @@ $pinjaman = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                     <th class="text-center">Bayar Pokok</th>
                     <th class="text-center">Bayar Bunga</th>
                     <th class="text-center">Tenor</th>
-                    <th class="text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,8 +54,8 @@ $pinjaman = AppKatalog::getAllRowsWithStatus('tb_pinjaman',1);
                   <tr>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
-                    <th>Total</th>
                     <th>&nbsp;</th>
+                    <th>Total</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
@@ -123,9 +123,21 @@ $(function() {
           },
           "lengthMenu": " _MENU_ baris "
         },
-        columns: [
-          { "data": "anggota", "class": "pl-3" },
+        columns: [{
+            "data": "anggota",
+            "class": "pl-3",
+            "render": function(data, type, row) {
+              return row.salut + "&nbsp;" + data
+            },
+          },
           { "data": "nomor_kontrak", "class": "text-center", },
+          {
+            "data": "status",
+            "class": "text-center",
+            "render": function(data, type, row) {
+              return kreditBadge(data)
+            },
+          },
           {
             "data": "tanggal",
             "class": "text-center",
@@ -169,13 +181,7 @@ $(function() {
             },
           },
           { "data": "tenor", "class": "text-center", },
-          {
-            "data": "status",
-            "class": "text-center",
-            "render": function(data, type, row) {
-              return kreditBadge(data)
-            },
-          },
+
         ],
         buttons: [{
             extend: 'excelHtml5',
@@ -232,7 +238,7 @@ $(function() {
         footerCallback: function(row, data, start, end, display) {
           var api = this.api(),
             data;
-          var colNumber = [2, 3, 4, 5, 6, 7];
+          var colNumber = [3, 4, 5, 6, 7, 8, ];
           var intVal = function(i) {
             return typeof i === 'string' ?
               i.replace(/[, ₹]|(\.\d{2})/g, '') * 1 :
